@@ -1,0 +1,55 @@
+---
+import { milestones } from '../data/companies';
+
+const top = milestones.filter(m => m.row === 'top');
+const bottom = milestones.filter(m => m.row === 'bottom');
+---
+
+<section id="history" aria-labelledby="history-heading">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2 id="history-heading" data-i18n="hist.title">Our <strong>History</strong>.</h2>
+      <span class="label" data-i18n="hist.label">History</span>
+    </div>
+
+    <div class="history-intro-block reveal">
+      <p data-i18n="hist.lede">
+        From a Swiss rolling mill founded in 1983 to a transatlantic metallurgical
+        group of five companies — four decades of continuous expansion in technology,
+        products and geography.
+      </p>
+    </div>
+
+    <div class="timeline-h reveal">
+      <div class="timeline-track" aria-hidden="true"></div>
+
+      <ol class="timeline-row top" aria-label="Major milestones (top row)">
+        {top.map(m => (
+          <li class={`tl-node${m.major ? ' major' : ''}`}>
+            <div class="tl-card">
+              <div class="tl-year">{m.year}</div>
+              <div class="tl-title" data-i18n={m.titleKey}>—</div>
+              <div class="tl-desc" data-i18n={m.descKey}>—</div>
+            </div>
+            <span class="tl-stem" aria-hidden="true"></span>
+            <span class="tl-dot" aria-hidden="true"></span>
+          </li>
+        ))}
+      </ol>
+
+      <ol class="timeline-row bottom" aria-label="Major milestones (bottom row)">
+        {bottom.map(m => (
+          <li class={`tl-node${m.major ? ' major' : ''}`}>
+            <span class="tl-dot" aria-hidden="true"></span>
+            <span class="tl-stem" aria-hidden="true"></span>
+            <div class="tl-card">
+              <div class="tl-year">{m.year}</div>
+              <div class="tl-title" data-i18n={m.titleKey}>—</div>
+              <div class="tl-desc" data-i18n={m.descKey}>—</div>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>
