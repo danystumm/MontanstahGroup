@@ -92,7 +92,7 @@ export const companies: Company[] = [
     legalName: 'Siderval S.p.A.',
     shortName: 'Siderval',
     role: 'subsidiary',
-    tagline: 'Hot Extrusion Specialist',
+    tagline: 'European hot extrusion plant',
     description:
       'Highly specialized in the hot extrusion of carbon steel, stainless steel and titanium. From its plant in the Valtellina valley, Siderval engineers solid and hollow custom profiles for the most demanding markets — including aerospace, nuclear energy, naval, medical, forklift & material handling, and other high-precision sectors — combining shape flexibility with the most stringent quality and safety standards.',
     city: 'Talamona',
@@ -132,7 +132,7 @@ export const companies: Company[] = [
     legalName: 'Stainless Structurals LLC',
     shortName: 'Stainless Structurals',
     role: 'subsidiary',
-    tagline: 'North American Operations',
+    tagline: 'American laser welding and fabrication plant',
     description:
       'The Group\'s North American arm, headquartered in Conroe, Texas. Operating the largest laser-fusion line in America, Stainless Structurals delivers ready-to-install stainless steel beams, channels, custom sections and tubing — supplying data centers, architecture and industrial customers across the continent under a "Made in the USA" mandate.',
     city: 'Conroe',
@@ -166,7 +166,7 @@ export const companies: Company[] = [
     legalName: 'Extralloys LLC',
     shortName: 'Extralloys',
     role: 'production-facility',
-    tagline: 'U.S. Hot Extrusion Facility',
+    tagline: 'American hot extrusion plant',
     description:
       'The Group\'s hot extrusion plant in the United States, located in Tunica, Mississippi. Extralloys operates one of the largest hot extrusion presses in the country, producing extruded profiles in steel, stainless steel and specialty alloys — reinforcing the Group\'s domestic supply for industrial, energy and infrastructure customers across North America.',
     city: 'Tunica',
@@ -193,7 +193,7 @@ export const companies: Company[] = [
     legalName: 'Montanstahl GmbH',
     shortName: 'Montanstahl GmbH',
     role: 'production-facility',
-    tagline: 'European Hot Extrusion Plant',
+    tagline: 'European hot extrusion plant',
     description:
       'The Group\'s hot extrusion plant in Europe, based in Schwerte, Germany (formerly HOESCH, acquired in 2021). Specialized in the production of hot extruded profiles in steel as well as nickel-base and titanium alloys, Montanstahl GmbH is the reference site when section design is particularly complex — serving European customers from the heart of the continent\'s industrial heartland.',
     city: 'Schwerte',
