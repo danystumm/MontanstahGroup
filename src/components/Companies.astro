@@ -1,0 +1,19 @@
+---
+import { companies } from '../data/companies';
+import CompanyCard from './CompanyCard.astro';
+---
+
+<section id="companies" aria-labelledby="companies-heading">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2 id="companies-heading" data-i18n="companies.title">
+        Five companies, <strong>one purpose</strong>.
+      </h2>
+      <span class="label" data-i18n="companies.label">Portfolio</span>
+    </div>
+
+    <div class="companies">
+      {companies.map((c) => <CompanyCard company={c} />)}
+    </div>
+  </div>
+</section>
