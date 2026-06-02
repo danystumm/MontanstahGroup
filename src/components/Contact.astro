@@ -1,0 +1,54 @@
+---
+import { companies } from '../data/companies';
+const hq = companies[0];
+---
+
+<section id="contact" class="contact-section" aria-labelledby="contact-heading">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2 id="contact-heading" data-i18n="ctc.title">Get in <strong>touch</strong>.</h2>
+      <span class="label" data-i18n="ctc.label">Contact</span>
+    </div>
+
+    <div class="contact-grid">
+      <div class="reveal">
+        <p class="contact-lede" data-i18n="ctc.lede">
+          For commercial inquiries, partnerships, press or careers — reach out
+          directly to the relevant company based on your location.
+        </p>
+        <p class="contact-text" data-i18n="ctc.text">
+          Each company in the Group operates with its own commercial team and
+          technical sales contacts. For Group-level matters, contact Montanstahl AG.
+        </p>
+      </div>
+
+      <div class="contact-card reveal" itemscope itemtype="https://schema.org/PostalAddress">
+        <h4>{hq.legalName}</h4>
+        <div class="sub" data-i18n="ctc.hq">Group Headquarters</div>
+        <dl>
+          <div>
+            <dt data-i18n="ctc.addr">Address</dt>
+            <dd>
+              <span itemprop="streetAddress">{hq.address.street}</span><br />
+              <span itemprop="postalCode">{hq.address.postalCode}</span>
+              <span itemprop="addressLocality">{hq.address.city}</span> ·
+              <span itemprop="addressCountry">{hq.address.country}</span>
+            </dd>
+          </div>
+          <div>
+            <dt data-i18n="ctc.phone">Phone</dt>
+            <dd><a href={`tel:${hq.phone?.replace(/\s/g, '')}`} itemprop="telephone">{hq.phone}</a></dd>
+          </div>
+          <div>
+            <dt data-i18n="ctc.web">Web</dt>
+            <dd><a href={hq.website} target="_blank" rel="noopener">montanstahl.com</a></dd>
+          </div>
+          <div>
+            <dt data-i18n="ctc.hours">Hours</dt>
+            <dd data-i18n="ctc.hoursVal">Mon–Fri · 08:00–12:00 / 13:00–17:00 CET</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
