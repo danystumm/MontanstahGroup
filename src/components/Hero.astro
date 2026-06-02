@@ -1,0 +1,47 @@
+---
+import { groupFacts } from '../data/companies';
+---
+
+<header class="hero" id="top">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="wrap hero-content">
+    <div class="eyebrow" data-i18n="hero.eyebrow">The Montanstahl Group</div>
+
+    <h1 data-i18n="hero.title">
+      A global <strong>metallurgical group</strong> of companies engineering
+      <span class="accent">special steel profiles</span>.
+    </h1>
+
+    <p class="hero-lede" data-i18n="hero.lede">
+      Headquartered in Stabio, Switzerland, the Montanstahl Group operates
+      <strong>five production facilities</strong> across Europe and North America
+      and a global network of commercial offices, mastering
+      <strong>six core production technologies</strong> for custom steel profiles
+      and structural stainless steel sections.
+    </p>
+
+    <div class="hero-purpose" data-i18n="hero.purpose">
+      <strong>One Stop Solution Provider</strong> for custom profiles in steel and
+      structural profiles in stainless steel — worldwide.
+    </div>
+
+    <dl class="hero-meta">
+      <div class="meta-item">
+        <dd class="meta-num">{groupFacts.employees.total}<sup>+</sup></dd>
+        <dt class="meta-label" data-i18n="hero.m0">Employees</dt>
+      </div>
+      <div class="meta-item">
+        <dd class="meta-num">{groupFacts.productionSites}</dd>
+        <dt class="meta-label" data-i18n="hero.m1">Production sites</dt>
+      </div>
+      <div class="meta-item">
+        <dd class="meta-num">{groupFacts.technologies.length}</dd>
+        <dt class="meta-label" data-i18n="hero.m2">Technologies</dt>
+      </div>
+      <div class="meta-item">
+        <dd class="meta-num">{groupFacts.marketsServed}<sup>+</sup></dd>
+        <dt class="meta-label" data-i18n="hero.m4">Countries served</dt>
+      </div>
+    </dl>
+  </div>
+</header>
