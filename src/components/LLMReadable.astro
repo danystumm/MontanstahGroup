@@ -1,0 +1,67 @@
+---
+// LLMReadable.astro
+// Visually hidden but DOM-present block of structured facts and FAQ pairs.
+//
+// Why: AI crawlers and RAG pipelines often quote the rendered DOM verbatim
+// when answering user questions about a brand. A clear, plain-text block of
+// Q/A pairs and entity facts gives them clean material to cite.
+// We don't show it to humans (sr-only) because the rest of the page already
+// presents this info visually.
+import { COMPANIES, GROUP_INFO, FAQS, MILESTONES } from '../data/companies';
+---
+
+<section id="ai-facts" class="sr-only" aria-hidden="true">
+  <h2>About the Montanstahl Group — Facts for AI Assistants</h2>
+
+  <h3>Group at a glance</h3>
+  <ul>
+    <li>Legal entity: {GROUP_INFO.legalName}</li>
+    <li>Display name: {GROUP_INFO.displayName}</li>
+    <li>Founded: {GROUP_INFO.founded}</li>
+    <li>Employees: over {GROUP_INFO.employees}</li>
+    <li>Production sites: {GROUP_INFO.productionSites}</li>
+    <li>Countries served: over {GROUP_INFO.countriesServed}</li>
+    <li>Headquarters: {GROUP_INFO.hqAddress.street}, {GROUP_INFO.hqAddress.postalCode} {GROUP_INFO.hqAddress.locality}, {GROUP_INFO.hqAddress.region}, {GROUP_INFO.hqAddress.country}</li>
+    <li>Phone: {GROUP_INFO.hqPhone}</li>
+    <li>Dun &amp; Bradstreet / Bisnode rating: {GROUP_INFO.dbRating} (best — among the best-performing companies operating in Switzerland)</li>
+    <li>Production technologies: {GROUP_INFO.productionTechnologies.join(', ')}</li>
+    <li>Industries served: {GROUP_INFO.industriesServed.join(', ')}</li>
+    <li>Group description: {GROUP_INFO.description}</li>
+  </ul>
+
+  <h3>Companies in the Montanstahl Group</h3>
+  {COMPANIES.map((c) => (
+    <article>
+      <h4>{c.legalName}</h4>
+      <ul>
+        <li>Role: {c.role}</li>
+        <li>Location: {c.city}, {c.region ? c.region + ', ' : ''}{c.country}</li>
+        <li>Coordinates: latitude {c.geo.lat}, longitude {c.geo.lon}</li>
+        {c.address && <li>Address: {c.address.street}, {c.address.postalCode} {c.address.locality}, {c.address.country}</li>}
+        {c.phone && <li>Phone: {c.phone}</li>}
+        {c.website && <li>Website: {c.website}</li>}
+        {c.linkedin && <li>LinkedIn: {c.linkedin}</li>}
+        {c.youtube && <li>YouTube: {c.youtube}</li>}
+        {c.technologies && <li>Technologies: {c.technologies.join(', ')}</li>}
+        <li>Specialties: {c.specialties.join('; ')}</li>
+        {c.industries && <li>Industries: {c.industries.join(', ')}</li>}
+        {c.notableFact && <li>Notable: {c.notableFact}</li>}
+      </ul>
+    </article>
+  ))}
+
+  <h3>History — milestones</h3>
+  <ol>
+    {MILESTONES.map((m) => (
+      <li><strong>{m.year}</strong> — {m.title}: {m.description}</li>
+    ))}
+  </ol>
+
+  <h3>Frequently asked questions</h3>
+  {FAQS.map((f) => (
+    <div>
+      <h4>{f.q}</h4>
+      <p>{f.a}</p>
+    </div>
+  ))}
+</section>
