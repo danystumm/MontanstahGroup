@@ -1,0 +1,96 @@
+---
+// =============================================================================
+// SEO meta tags — full coverage for traditional & social SEO
+// =============================================================================
+export interface Props {
+  title: string;
+  description: string;
+  /** Path-only canonical (e.g. "/" or "/about") — combined with Astro's site URL */
+  canonical?: string;
+  /** OG image absolute URL or path */
+  image?: string;
+  imageAlt?: string;
+  /** Override og:type. Default 'website' */
+  ogType?: 'website' | 'article';
+  /** Optional language tag for <html lang>. Default 'en' */
+  lang?: string;
+  /** No-index? Default false */
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  canonical = '/',
+  image = '/og-image.png',
+  imageAlt = 'Montanstahl Group — special steel profile manufacturers',
+  ogType = 'website',
+  lang = 'en',
+  noindex = false,
+} = Astro.props;
+
+const siteURL = Astro.site ?? new URL('https://www.montanstahl-group.com');
+const canonicalURL = new URL(canonical, siteURL);
+const ogImage = image.startsWith('http') ? image : new URL(image, siteURL).toString();
+---
+
+<!-- Primary Meta Tags -->
+<title>{title}</title>
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+<meta name="generator" content={Astro.generator} />
+<link rel="canonical" href={canonicalURL.toString()} />
+
+<!-- Language alternates (hreflang) — single-page multilingual via JS, so x-default is same URL -->
+<link rel="alternate" hreflang="en" href={canonicalURL.toString()} />
+<link rel="alternate" hreflang="it" href={canonicalURL.toString()} />
+<link rel="alternate" hreflang="de" href={canonicalURL.toString()} />
+<link rel="alternate" hreflang="es" href={canonicalURL.toString()} />
+<link rel="alternate" hreflang="x-default" href={canonicalURL.toString()} />
+
+<!-- Robots -->
+{noindex
+  ? <meta name="robots" content="noindex, nofollow" />
+  : <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+}
+
+<!-- LLM / AI crawler hints (advisory, not enforced) -->
+<meta name="googlebot" content="index, follow" />
+<meta name="bingbot" content="index, follow" />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={ogType} />
+<meta property="og:url" content={canonicalURL.toString()} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:image:alt" content={imageAlt} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:site_name" content="Montanstahl Group" />
+<meta property="og:locale" content={`${lang}_${lang === 'en' ? 'US' : lang.toUpperCase()}`} />
+<meta property="og:locale:alternate" content="en_US" />
+<meta property="og:locale:alternate" content="it_IT" />
+<meta property="og:locale:alternate" content="de_DE" />
+<meta property="og:locale:alternate" content="es_ES" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={canonicalURL.toString()} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+<meta name="twitter:image:alt" content={imageAlt} />
+
+<!-- Theme color / mobile -->
+<meta name="theme-color" content="#000000" />
+<meta name="color-scheme" content="dark" />
+
+<!-- Geo (helps for local/B2B intent) -->
+<meta name="geo.region" content="CH-TI" />
+<meta name="geo.placename" content="Stabio, Ticino, Switzerland" />
+<meta name="geo.position" content="45.85;8.93" />
+<meta name="ICBM" content="45.85, 8.93" />
+
+<!-- Format detection -->
+<meta name="format-detection" content="telephone=yes" />
