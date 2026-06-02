@@ -1,0 +1,3 @@
+Contact: https://www.montanstahl.com/contact/
+Preferred-Languages: en, it, de
+Canonical: https://www.montanstahl-group.com/.well-known/security.txt
