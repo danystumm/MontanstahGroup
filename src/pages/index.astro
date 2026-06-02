@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import Overview from '../components/Overview.astro';
+import Companies from '../components/Companies.astro';
+import WorldMap from '../components/WorldMap.astro';
+import Timeline from '../components/Timeline.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+import AIContext from '../components/AIContext.astro';
+
+const title = 'Montanstahl Group — One Stop Solution Provider for Special Steel Profiles';
+const description = 'The Montanstahl Group is a global metallurgical group of five companies producing custom steel profiles and structural stainless steel sections. Headquartered in Stabio, Switzerland — over 600 employees, 5 production sites across Switzerland, Italy, Germany and the USA, serving 90+ countries.';
+---
+
+<BaseLayout title={title} description={description} canonical="/">
+  <Nav />
+  <main id="main">
+    <Hero />
+    <Overview />
+    <Companies />
+    <WorldMap />
+    <Timeline />
+    <Contact />
+  </main>
+  <Footer />
+
+  <!-- AI-readable structured content (visually hidden, machine-discoverable) -->
+  <AIContext />
+</BaseLayout>
+
+<script>
+  import { initClient } from '../scripts/client.ts';
+  initClient();
+</script>
