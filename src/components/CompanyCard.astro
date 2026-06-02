@@ -1,0 +1,106 @@
+---
+import type { Company } from '../data/companies';
+export interface Props { company: Company }
+const { company: c } = Astro.props;
+
+const isFlagship = !!c.flagship;
+const cardClass = ['company', isFlagship ? 'flagship' : 'span-6', 'reveal'].join(' ');
+
+const i18nKeyPrefix = c.id === 'montanstahl-ag' ? 'msah'
+  : c.id === 'siderval' ? 'sid'
+  : c.id === 'stainless-structurals' ? 'ssa'
+  : c.id === 'extralloys' ? 'ext'
+  : 'msde';
+---
+
+<article class={cardClass} itemscope itemtype="https://schema.org/Organization" aria-labelledby={`co-${c.id}-name`}>
+  <meta itemprop="name" content={c.legalName} />
+  <meta itemprop="legalName" content={c.legalName} />
+  {c.website && <meta itemprop="url" content={c.website} />}
+  <meta itemprop="parentOrganization" content="Montanstahl Group" />
+
+  <div class="company-header">
+    <div class="logo-slot">
+      <img src={c.logo} alt={`${c.shortName} logo`} loading={isFlagship ? 'eager' : 'lazy'} itemprop="logo" />
+    </div>
+    <div class="company-pin">
+      <span class="flag" aria-hidden="true">{c.flag}</span>
+      <span><strong>{c.city}</strong></span>
+      <span>{c.country}</span>
+    </div>
+  </div>
+
+  <div class="company-body" itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+    {isFlagship ? (
+      <>
+        <div>
+          <div class="company-tag" data-i18n="msah.tag">{c.tagline}</div>
+          <h3 class="company-name" id={`co-${c.id}-name`} itemprop="name">{c.legalName}</h3>
+          <p class="company-desc" data-i18n="msah.desc" set:html={`Global producer and supplier of <strong>stainless steel structural sections</strong> and custom special profiles. From its Swiss headquarters in Stabio (Ticino), Montanstahl coordinates the Group's engineering, innovation and worldwide commercial network, operating an integrated portfolio of manufacturing technologies under one roof.`} />
+
+          <!-- D&B Rating block (HQ only) -->
+          <div class="rating-block" role="note" aria-label="Dun & Bradstreet rating">
+            <div class="rating-mark">
+              <span class="rating-num">1</span>
+              <span class="rating-lbl" data-i18n="msah.ratingLbl">Risk Indicator</span>
+            </div>
+            <div class="rating-text">
+              <div class="rating-title" data-i18n="msah.ratingTitle">Dun &amp; Bradstreet / Bisnode Rating</div>
+              <div class="rating-desc" data-i18n="msah.ratingDesc" set:html={`Montanstahl is evaluated annually by Dun &amp; Bradstreet / Bisnode with a risk indicator of <strong>1</strong> — ranking among the best-performing companies operating in Switzerland.`} />
+            </div>
+          </div>
+
+          <div class="company-actions" style="margin-top: 22px;">
+            <a class="btn primary" href={c.website} target="_blank" rel="noopener" itemprop="url">
+              <span data-i18n="btn.visit">Visit website</span>
+              <span class="arrow" aria-hidden="true">→</span>
+            </a>
+            {c.linkedin && <a class="btn" href={c.linkedin} target="_blank" rel="noopener">LinkedIn</a>}
+            {c.youtube && (
+              <a class="btn icon" href={c.youtube} target="_blank" rel="noopener" aria-label="YouTube channel">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="currentColor" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.6 3.6 12 3.6 12 3.6s-7.6 0-9.4.5a3 3 0 0 0-2.1 2.1A31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.8.5 9.4.5 9.4.5s7.6 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>
+              </a>
+            )}
+          </div>
+        </div>
+
+        <dl class="company-meta-list">
+          <div class="cmeta"><dt data-i18n="lbl.role">Role</dt><dd data-i18n="msah.role">{c.tagline}</dd></div>
+          <div class="cmeta"><dt data-i18n="lbl.products">Products</dt><dd data-i18n="msah.prod" itemprop="makesOffer">{c.specialties.join(', ')}</dd></div>
+          <div class="cmeta"><dt data-i18n="lbl.address">Address</dt>
+            <dd>
+              <span itemprop="streetAddress">{c.address.street}</span> ·
+              <span itemprop="postalCode">{c.address.postalCode}</span>
+              <span itemprop="addressLocality">{c.address.city}</span> ·
+              <span itemprop="addressCountry">{c.countryCode}</span>
+            </dd>
+          </div>
+          {c.phone && (
+            <div class="cmeta"><dt data-i18n="lbl.phone">Phone</dt><dd itemprop="telephone"><a href={`tel:${c.phone.replace(/\s/g, '')}`}>{c.phone}</a></dd></div>
+          )}
+        </dl>
+      </>
+    ) : (
+      <>
+        <div class="company-tag" data-i18n={`${i18nKeyPrefix}.tag`}>{c.tagline}</div>
+        <h3 class="company-name" id={`co-${c.id}-name`} itemprop="name">{c.legalName}</h3>
+        <p class="company-desc" data-i18n={`${i18nKeyPrefix}.desc`} itemprop="description">{c.description}</p>
+
+        <div class="company-actions">
+          {c.website && (
+            <a class="btn primary" href={c.website} target="_blank" rel="noopener" itemprop="url">
+              <span data-i18n="btn.visit">Visit website</span>
+              <span class="arrow" aria-hidden="true">→</span>
+            </a>
+          )}
+          {c.linkedin && <a class="btn" href={c.linkedin} target="_blank" rel="noopener">LinkedIn</a>}
+          {c.youtube && (
+            <a class="btn icon" href={c.youtube} target="_blank" rel="noopener" aria-label="YouTube channel">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="currentColor" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.6 3.6 12 3.6 12 3.6s-7.6 0-9.4.5a3 3 0 0 0-2.1 2.1A31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.8.5 9.4.5 9.4.5s7.6 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>
+            </a>
+          )}
+        </div>
+      </>
+    )}
+  </div>
+</article>
