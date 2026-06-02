@@ -66,7 +66,7 @@ export const strings: Record<Lang, Record<string, string>> = {
     'tl6.t': 'Ottostumm', 'tl6.d': 'Integration of Ottostumm — strengthening the offer for steel window and façade systems.',
     'tl7.t': 'Acquisition of HOESCH', 'tl7.d': 'Acquisition of HOESCH in Germany — becomes Montanstahl GmbH, the Group\'s European hot extrusion plant.',
     'tl8.t': 'Acquisition of Siderval', 'tl8.d': 'Acquisition of Siderval S.p.A. in Talamona, Italy — world-class hot extrusion in steel and titanium joins the Group.',
-    'tl9.t': 'Extralloys — Tunica', 'tl9.d': 'Extralloys established in Tunica, Mississippi — one of the largest hot extrusion presses in the United States.',
+    'tl9.t': 'Acquisition of Extralloys', 'tl9.d': 'Acquisition of Extralloys in Tunica, Mississippi — one of the largest hot extrusion presses in the United States.',
 
     'ctc.title': 'Get in <strong>touch</strong>.', 'ctc.label': 'Contact',
     'ctc.lede': 'For commercial inquiries, partnerships, press or careers — reach out directly to the relevant company based on your location.',
