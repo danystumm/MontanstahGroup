@@ -1,0 +1,199 @@
+---
+// =============================================================================
+// JSON-LD Structured Data — schema.org
+// =============================================================================
+// Generates rich, AI-readable structured data:
+//   - Organization (parent — Montanstahl AG / Montanstahl Group)
+//   - Organization (subOrganization) for each company in the Group
+//   - Place + PostalAddress for each location
+//   - FAQPage with common B2B questions
+//   - BreadcrumbList
+//   - WebSite with SearchAction (not used, but signals)
+// =============================================================================
+import { companies, groupFacts } from '../data/companies';
+
+const siteURL = (Astro.site ?? new URL('https://www.montanstahl-group.com')).toString().replace(/\/$/, '');
+
+const hq = companies[0];
+const subsidiaries = companies.filter(c => c.role !== 'headquarters');
+
+// Parent Organization
+const parentOrg = {
+  '@type': 'Corporation',
+  '@id': `${siteURL}/#organization`,
+  name: groupFacts.brandName,
+  alternateName: groupFacts.legalName,
+  legalName: groupFacts.legalName,
+  url: siteURL,
+  logo: `${siteURL}/assets/logos/montanstahl.svg`,
+  image: `${siteURL}/og-image.png`,
+  foundingDate: String(groupFacts.foundedYear),
+  foundingLocation: {
+    '@type': 'Place',
+    name: groupFacts.foundedCity,
+  },
+  numberOfEmployees: {
+    '@type': 'QuantitativeValue',
+    value: groupFacts.employees.total,
+    minValue: groupFacts.employees.total,
+  },
+  description: 'The Montanstahl Group is a global metallurgical group of companies producing custom steel profiles and structural stainless steel sections. Headquartered in Stabio, Switzerland, the Group operates five production facilities across Switzerland, Italy, Germany and the United States and serves customers in more than 90 countries.',
+  slogan: 'One Stop Solution Provider for custom profiles in steel and structural profiles in stainless steel — worldwide.',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: hq.address.street,
+    postalCode: hq.address.postalCode,
+    addressLocality: hq.address.city,
+    addressRegion: hq.region,
+    addressCountry: hq.countryCode,
+  },
+  contactPoint: {
+    '@type': 'ContactPoint',
+    telephone: hq.phone,
+    contactType: 'customer service',
+    areaServed: 'Worldwide',
+    availableLanguage: ['English', 'Italian', 'German', 'Spanish', 'French'],
+  },
+  sameAs: [
+    hq.website,
+    hq.linkedin,
+    hq.youtube,
+  ].filter(Boolean),
+  knowsAbout: [
+    ...groupFacts.technologies.map(t => `${t} of steel and stainless steel profiles`),
+    'Custom steel profiles',
+    'Structural stainless steel sections',
+    'Architectural steel profiles',
+    'Hot extrusion of titanium',
+    'Hot extrusion of nickel-base alloys',
+  ],
+  hasCredential: [{
+    '@type': 'EducationalOccupationalCredential',
+    credentialCategory: 'rating',
+    name: 'Dun & Bradstreet / Bisnode',
+    description: `Risk indicator of ${groupFacts.rating.indicator} — ${groupFacts.rating.note}`,
+  }],
+  subOrganization: subsidiaries.map(c => ({
+    '@type': 'Organization',
+    '@id': `${siteURL}/#org-${c.id}`,
+    name: c.legalName,
+    alternateName: c.shortName,
+    url: c.website,
+    logo: `${siteURL}${c.logo}`,
+    description: c.description,
+    parentOrganization: { '@id': `${siteURL}/#organization` },
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: c.address.street,
+      postalCode: c.address.postalCode,
+      addressLocality: c.address.city,
+      addressRegion: c.region,
+      addressCountry: c.countryCode,
+    },
+    ...(c.phone ? { telephone: c.phone } : {}),
+    sameAs: [c.website, c.linkedin, c.youtube].filter(Boolean),
+    knowsAbout: c.specialties,
+  })),
+};
+
+// Place entities for each production site
+const places = companies.map(c => ({
+  '@type': 'Place',
+  '@id': `${siteURL}/#place-${c.id}`,
+  name: `${c.shortName} — ${c.city}`,
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: c.coordinates.lat,
+    longitude: c.coordinates.lon,
+  },
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: c.city,
+    addressRegion: c.region,
+    addressCountry: c.countryCode,
+  },
+}));
+
+// FAQ — common B2B / AI-search questions about the Group
+const faqs = [
+  {
+    q: 'What is the Montanstahl Group?',
+    a: 'The Montanstahl Group is a global metallurgical group of five companies producing custom steel profiles and structural stainless steel sections. It is headquartered in Stabio, Switzerland, and operates production facilities in Switzerland, Italy, Germany and the United States.',
+  },
+  {
+    q: 'Where is the Montanstahl Group headquartered?',
+    a: 'The Montanstahl Group is headquartered in Stabio, Canton of Ticino, Switzerland — at Via Gerrette 2, 6855 Stabio.',
+  },
+  {
+    q: 'How many employees does the Montanstahl Group have?',
+    a: `The Montanstahl Group has over ${groupFacts.employees.total} employees in total, with approximately ${groupFacts.employees.stabio} based in Stabio, Switzerland, and the remainder distributed across the four other production facilities and global commercial offices.`,
+  },
+  {
+    q: 'What companies are part of the Montanstahl Group?',
+    a: 'The Montanstahl Group consists of five companies: Montanstahl AG (Stabio, Switzerland — headquarters), Siderval S.p.A. (Talamona, Italy — hot extrusion specialist), Stainless Structurals (Conroe, Texas, USA — North American operations), Extralloys (Tunica, Mississippi, USA — U.S. hot extrusion facility) and Montanstahl GmbH (Schwerte, Germany — European hot extrusion plant).',
+  },
+  {
+    q: 'What production technologies does the Montanstahl Group use?',
+    a: `The Montanstahl Group masters six production technologies, often in combination: ${groupFacts.technologies.join(', ')}.`,
+  },
+  {
+    q: 'What industries does the Montanstahl Group serve?',
+    a: `Montanstahl profiles are used in many sectors, including ${groupFacts.industries.join(', ')} and more.`,
+  },
+  {
+    q: 'When was the Montanstahl Group founded?',
+    a: `Montanstahl SA was founded in 1983 in Ticino, Switzerland, as a rolling mill for steel profiles. Over four decades the company has grown into the present Montanstahl Group of five companies.`,
+  },
+  {
+    q: 'Is the Montanstahl Group a "One Stop Solution Provider"?',
+    a: 'Yes. The Montanstahl Group operates as a One Stop Solution Provider for custom profiles in steel and structural profiles in stainless steel, worldwide. The Group\'s integrated technology portfolio allows it to meet a wide range of customer requirements from a single source.',
+  },
+  {
+    q: 'What is the Montanstahl Group\'s Dun & Bradstreet rating?',
+    a: 'Montanstahl is evaluated annually by Dun & Bradstreet / Bisnode and holds a risk indicator of 1, ranking it among the best-performing companies operating in Switzerland.',
+  },
+];
+
+const faqJsonLd = {
+  '@type': 'FAQPage',
+  '@id': `${siteURL}/#faq`,
+  mainEntity: faqs.map(f => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+
+// WebSite
+const website = {
+  '@type': 'WebSite',
+  '@id': `${siteURL}/#website`,
+  url: siteURL,
+  name: 'Montanstahl Group',
+  publisher: { '@id': `${siteURL}/#organization` },
+  inLanguage: ['en', 'it', 'de', 'es'],
+};
+
+// BreadcrumbList (single page, but good practice)
+const breadcrumb = {
+  '@type': 'BreadcrumbList',
+  '@id': `${siteURL}/#breadcrumb`,
+  itemListElement: [{
+    '@type': 'ListItem',
+    position: 1,
+    name: 'Home',
+    item: siteURL,
+  }],
+};
+
+// Wrap in @graph for clean single block
+const graph = {
+  '@context': 'https://schema.org',
+  '@graph': [parentOrg, website, breadcrumb, faqJsonLd, ...places],
+};
+---
+
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify(graph, null, 0)}
+/>
