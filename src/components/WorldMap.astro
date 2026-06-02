@@ -1,0 +1,110 @@
+---
+import { companies, groupFacts } from '../data/companies';
+
+const hq = companies.find(c => c.role === 'headquarters')!;
+const others = companies.filter(c => c.id !== hq.id);
+---
+
+<section id="presence" class="map-section" aria-labelledby="presence-heading">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2 id="presence-heading" data-i18n="map.title">
+        A <strong>global</strong> manufacturing footprint.
+      </h2>
+      <span class="label" data-i18n="map.label">Presence</span>
+    </div>
+
+    <div class="map-wrap reveal">
+      <svg class="map-svg" viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" role="img" aria-label="World map showing the five production sites of the Montanstahl Group">
+
+        <title>Montanstahl Group — global production sites</title>
+        <desc>
+          The Montanstahl Group operates five production sites worldwide:
+          {companies.map(c => `${c.shortName} in ${c.city}, ${c.country}`).join('; ')}.
+        </desc>
+
+        <!-- Graticule -->
+        <g class="graticule" aria-hidden="true">
+          <line x1="0" y1="125" x2="1000" y2="125" />
+          <line x1="0" y1="250" x2="1000" y2="250" />
+          <line x1="0" y1="375" x2="1000" y2="375" />
+          <line x1="166.7" y1="0" x2="166.7" y2="500" />
+          <line x1="333.3" y1="0" x2="333.3" y2="500" />
+          <line x1="500" y1="0" x2="500" y2="500" />
+          <line x1="666.7" y1="0" x2="666.7" y2="500" />
+          <line x1="833.3" y1="0" x2="833.3" y2="500" />
+        </g>
+
+        <!-- Land masses (simplified equirectangular) -->
+        <g aria-hidden="true">
+          <path class="land" d="M 130 105 L 145 95 L 175 90 L 210 88 L 240 92 L 265 100 L 285 115 L 295 130 L 290 145 L 280 155 L 270 168 L 260 180 L 250 195 L 240 210 L 232 225 L 228 240 L 235 250 L 250 248 L 268 255 L 280 268 L 285 280 L 280 290 L 268 295 L 255 290 L 240 285 L 222 275 L 205 262 L 192 248 L 180 232 L 170 215 L 158 195 L 145 175 L 132 155 L 122 135 L 120 118 Z" />
+          <path class="land" d="M 310 60 L 330 55 L 350 60 L 360 75 L 358 95 L 348 110 L 332 115 L 318 108 L 308 92 L 305 75 Z" />
+          <path class="land" d="M 222 275 L 235 285 L 245 298 L 255 312 L 260 325 L 252 330 L 240 322 L 230 310 L 222 295 Z" />
+          <path class="land" d="M 268 312 L 285 308 L 300 320 L 312 345 L 318 370 L 320 395 L 315 420 L 305 442 L 290 458 L 278 462 L 270 450 L 268 430 L 272 405 L 275 380 L 272 355 L 270 332 Z" />
+          <path class="land" d="M 478 110 L 490 102 L 505 100 L 520 102 L 535 105 L 548 110 L 558 118 L 568 125 L 575 135 L 572 148 L 562 155 L 548 158 L 530 156 L 512 152 L 498 145 L 488 135 L 480 125 Z" />
+          <path class="land" d="M 472 115 L 482 112 L 488 122 L 485 135 L 478 142 L 470 138 L 466 128 Z" />
+          <path class="land" d="M 510 75 L 530 70 L 545 78 L 552 92 L 550 105 L 540 110 L 525 108 L 515 100 L 508 88 Z" />
+          <path class="land" d="M 488 165 L 510 162 L 535 168 L 560 178 L 580 192 L 595 210 L 605 232 L 612 258 L 615 285 L 610 312 L 600 335 L 585 355 L 565 365 L 545 360 L 528 348 L 515 330 L 502 308 L 492 285 L 485 260 L 480 232 L 478 205 L 480 182 Z" />
+          <path class="land" d="M 595 175 L 615 172 L 632 178 L 645 188 L 650 202 L 645 215 L 632 222 L 618 220 L 605 212 L 595 200 L 590 185 Z" />
+          <path class="land" d="M 575 105 L 605 95 L 640 90 L 680 88 L 720 92 L 758 98 L 790 108 L 815 122 L 832 138 L 838 158 L 832 175 L 818 188 L 798 195 L 775 198 L 750 195 L 725 188 L 700 182 L 678 178 L 658 172 L 640 168 L 622 162 L 605 152 L 590 140 L 580 125 Z" />
+          <path class="land" d="M 668 185 L 685 182 L 700 188 L 712 200 L 715 215 L 712 230 L 702 245 L 690 252 L 678 248 L 668 235 L 662 220 L 660 205 L 663 195 Z" />
+          <path class="land" d="M 735 205 L 755 202 L 770 210 L 782 222 L 788 235 L 783 247 L 768 252 L 752 248 L 740 238 L 732 225 L 730 215 Z" />
+          <path class="land" d="M 760 258 L 780 256 L 798 262 L 815 268 L 825 275 L 822 282 L 808 285 L 790 282 L 772 278 L 758 270 Z" />
+          <path class="land" d="M 790 240 L 805 238 L 815 244 L 814 252 L 802 254 L 790 250 Z" />
+          <path class="land" d="M 845 145 L 858 142 L 868 150 L 872 162 L 865 172 L 855 170 L 848 162 L 842 152 Z" />
+          <path class="land" d="M 800 320 L 825 315 L 850 318 L 872 325 L 885 338 L 888 355 L 880 368 L 862 372 L 838 370 L 815 362 L 798 350 L 792 335 Z" />
+          <path class="land" d="M 900 380 L 912 378 L 918 388 L 915 398 L 905 400 L 898 392 Z" />
+          <path class="land" d="M 905 405 L 915 405 L 918 415 L 910 420 L 902 415 Z" />
+        </g>
+
+        <!-- Connector lines from HQ -->
+        {others.map(c => (
+          <line class="connector" x1={hq.mapXY.x} y1={hq.mapXY.y} x2={c.mapXY.x} y2={c.mapXY.y} />
+        ))}
+
+        <!-- HQ pin (larger, white core) -->
+        <g transform={`translate(${hq.mapXY.x} ${hq.mapXY.y})`}>
+          <circle class="pin-ring" r="9" />
+          <circle class="pin-dot" r="5.5" />
+          <circle class="pin-core" r="1.8" />
+          <text class="pin-label" x="11" y="-3">{hq.city.toUpperCase()}</text>
+          <text class="pin-sub" x="11" y="9">{hq.countryCode} · HQ</text>
+        </g>
+
+        <!-- Other site pins -->
+        {others.map(c => {
+          // Custom label offset per pin so they don't collide on the projection
+          const offset =
+            c.id === 'siderval' ? { lx: 11, ly: 14, sx: 11, sy: 25 } :
+            c.id === 'montanstahl-gmbh' ? { lx: -58, ly: -3, sx: -22, sy: 8 } :
+            c.id === 'stainless-structurals' ? { lx: -66, ly: -3, sx: -30, sy: 8 } :
+            c.id === 'extralloys' ? { lx: 11, ly: -3, sx: 11, sy: 8 } :
+            { lx: 11, ly: -3, sx: 11, sy: 8 };
+          return (
+            <g transform={`translate(${c.mapXY.x} ${c.mapXY.y})`}>
+              <circle class="pin-ring" r="7" />
+              <circle class="pin-dot" r="4.5" />
+              <text class="pin-label" x={offset.lx} y={offset.ly}>{c.city.toUpperCase()}{c.region && c.countryCode === 'US' ? `, ${c.region === 'Texas' ? 'TX' : c.region === 'Mississippi' ? 'MS' : ''}` : ''}</text>
+              <text class="pin-sub" x={offset.sx} y={offset.sy}>{c.countryCode === 'US' ? 'USA' : c.countryCode}</text>
+            </g>
+          );
+        })}
+      </svg>
+
+      <div class="map-footer">
+        <div class="map-stat">
+          <div class="num">{groupFacts.productionSites}</div>
+          <div class="lbl" data-i18n="map.s1">Production sites</div>
+        </div>
+        <div class="map-stat">
+          <div class="num">2</div>
+          <div class="lbl" data-i18n="map.s3">Continents</div>
+        </div>
+        <div class="map-stat">
+          <div class="num">{groupFacts.marketsServed}<span class="accent">+</span></div>
+          <div class="lbl" data-i18n="map.s4">Markets served</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
